@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Geo Guesswipe</string>
+    <string name="textView">Can you guess if these streetview are in Europe?
+    Swipe the image left for Europe, right for not Europe.</string>
+</resources>
