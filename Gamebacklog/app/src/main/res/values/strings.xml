@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Game backlog</string>
+
+    <string name="hintTitle">Title</string>
+    <string name="platformInput">Platform</string>
+    <string name="notesInput">Notes</string>
+    <string name="textViewStatus">Status</string>
+
+
+    <string name="spinnerprompt">Choose a status</string>
+
+    <string-array name="game_status">
+        <item>Want to play</item>
+        <item>Playing</item>
+        <item>Stalled</item>
+        <item>Dropped</item>
+    </string-array>
+
+</resources>
