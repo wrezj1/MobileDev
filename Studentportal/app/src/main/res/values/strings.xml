@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Student portal</string>
+    <string name="app_name">Wrezj-Portal</string>
     <string name="textViewUrl">URL</string>
     <string name="textViewTitle">Title</string>
     <string name="addPortalBtn">Add portal</string>

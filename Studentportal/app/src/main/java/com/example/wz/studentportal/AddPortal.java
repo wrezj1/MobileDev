@@ -20,8 +20,11 @@ public class AddPortal extends AppCompatActivity {
 
         url = findViewById(R.id.editTextUrl);
         title = findViewById(R.id.editTextTitle);
+
+
     }
 
+    //onclick defined in xml activity_main
     public void addPortalToList(View view) {
         if(!url.getText().toString().isEmpty() && !title.getText().toString().isEmpty()) {
             MainActivity.portals.add(new PortalObject(url.getText().toString()
