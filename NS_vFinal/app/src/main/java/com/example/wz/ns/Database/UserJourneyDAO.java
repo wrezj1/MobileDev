@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface UserJourneyDAO {
 
-    @Query("SELECT * FROM userJourney")
+    @Query("SELECT * FROM userJourney Order by id DESC")
     public List<UserJourney> getAllUserJourney();
 
     @Insert
