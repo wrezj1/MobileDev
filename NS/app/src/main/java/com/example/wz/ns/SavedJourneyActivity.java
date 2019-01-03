@@ -79,11 +79,9 @@ public class SavedJourneyActivity extends AppCompatActivity implements UserJourn
                     //Called when a user swipes left or right on a ViewHolder
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-
                         //Get the index corresponding to the selected position
                         int position = (viewHolder.getAdapterPosition());
                         db.userJourney().deleteUserJourney(saveList.get(position));
-                        System.out.println(saveList.size());
                         if(db.userJourney().getAllUserJourney().size() == 0){
                             finish();
                         }

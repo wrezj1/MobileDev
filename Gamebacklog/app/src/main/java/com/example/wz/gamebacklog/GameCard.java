@@ -118,7 +118,7 @@ public class GameCard implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.title);
-	dest.writeString(this.platform);
+	    dest.writeString(this.platform);
         dest.writeString(this.notes);
         dest.writeString(this.date);
         dest.writeString(this.status);

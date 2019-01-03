@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements GameCardAdapter.G
 
     private static AppDatabase db;
 
-    private int mModifyPosition;
+   // private int mModifyPosition;
     public static final String EXTRA_CARD = "thisCard";
     public static final int REQUESTCODE = 1234;
 
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements GameCardAdapter.G
     @Override
     public void gameCardOnClick(int i) {
         Intent intent = new Intent(MainActivity.this, UpdateCardActivity.class);
-        mModifyPosition = i;
+        //mModifyPosition = i;
         intent.putExtra(EXTRA_CARD, mGameCards.get(i));
         startActivityForResult(intent, REQUESTCODE);
     }
@@ -140,8 +140,6 @@ public class MainActivity extends AppCompatActivity implements GameCardAdapter.G
             this.taskCode = taskCode;
         }
 
-
-
         @Override
         protected List doInBackground(GameCard... gameCard) {
             switch (taskCode) {
@@ -157,8 +155,6 @@ public class MainActivity extends AppCompatActivity implements GameCardAdapter.G
                     db.gameCardDao().insertGameCard(gameCard[0]);
                     break;
             }
-
-
             //To return a new list with the updated data, we get all the data from the database again.
             return db.gameCardDao().getAllGameCards();
         }

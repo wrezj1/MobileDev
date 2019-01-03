@@ -16,7 +16,7 @@ import retrofit2.http.Path;
 public class ApiService {
     public interface TriviaApiService {
 
-        String BASE_URL = "http://numbersapi.com/";
+        String BASE_URL = "http://webservices.ns.nl/";
 
 
         Retrofit retrofit = new Retrofit.Builder()

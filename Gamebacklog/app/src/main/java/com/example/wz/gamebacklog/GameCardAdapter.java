@@ -3,6 +3,7 @@ package com.example.wz.gamebacklog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,18 +33,18 @@ public class GameCardAdapter extends RecyclerView.Adapter<GameCardAdapter.GameCa
     public GameCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View v = inflater.inflate(R.layout.game_card_view,parent,false);
+        View v = inflater.inflate(R.layout.game_card_view, parent, false);
         return new GameCardViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull GameCardViewHolder holder, int position) {
-    GameCard gameCard = mGameCardList.get(position);
+        GameCard gameCard = mGameCardList.get(position);
 
-    holder.title.setText(gameCard.getTitle());
-    holder.platform.setText(gameCard.getPlatform());
-    holder.status.setText(gameCard.getStatus());
-    holder.date.setText(gameCard.getDate());
+        holder.title.setText(gameCard.getTitle());
+        holder.platform.setText(gameCard.getPlatform());
+        holder.status.setText(gameCard.getStatus());
+        holder.date.setText(gameCard.getDate());
     }
 
     @Override
@@ -51,7 +52,7 @@ public class GameCardAdapter extends RecyclerView.Adapter<GameCardAdapter.GameCa
         return mGameCardList.size();
     }
 
-    public class GameCardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class GameCardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView title, platform, status, date;
 
@@ -71,12 +72,12 @@ public class GameCardAdapter extends RecyclerView.Adapter<GameCardAdapter.GameCa
         }
     }
 
-    public void swapList (List<GameCard> newList) {
+
+    public void swapList(List<GameCard> newList) {
         mGameCardList = newList;
         if (newList != null) {
             // Force the RecyclerView to refresh
             this.notifyDataSetChanged();
         }
-
     }
 }

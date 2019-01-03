@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.inp_to)
     public EditText to;
 
+    private String dateTime = "2018-12-25T22:00:00";
+    private String departure = "true";
     private static AppDatabase db;
 
     @Override
@@ -40,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     public void openHistory() {
         if (db.userJourney().getAllUserJourney().size() != 0) {
             System.out.println(db.userJourney().getAllUserJourney().size());
-            System.out.println("AAAAAAAAA");
             Intent i = new Intent(this, SavedJourneyActivity.class);
             startActivity(i);
         }else {
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, ResultActivity.class);
                 intent.putExtra("from", from);
                 intent.putExtra("to", to);
+                intent.putExtra("dateTime",dateTime);
+                intent.putExtra("departure",departure);
                 startActivity(intent);
             } else {
                 Toast.makeText(this, "Fill in both locations", Toast.LENGTH_LONG).show();

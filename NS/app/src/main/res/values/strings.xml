@@ -6,10 +6,12 @@
     <string name="reistijd">Journey time:</string>
     <string name="minuten"> minutes</string>
     <string name="uitstapzijde">Exit side :</string>
-    <string name="trainType">Trainn type :</string>
+    <string name="trainType">Train type :</string>
     <string name="zoekKnop">Find journey</string>
     <string name="startText">Station to station planner</string>
     <string name="hint1">From which station</string>
     <string name="hint2">To which station</string>
     <string name="savedJourney">Search history</string>
+    <string name="originActualDateTime">Actual</string>
+    <string name="destActualDateTime">Search history</string>
 </resources>

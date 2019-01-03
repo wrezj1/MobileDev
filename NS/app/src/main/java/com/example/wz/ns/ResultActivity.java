@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.wz.ns.API.ApiService;
 import com.example.wz.ns.Database.AppDatabase;
 import com.example.wz.ns.model.Destination;
+import com.example.wz.ns.model.Leg;
 import com.example.wz.ns.model.MainTest;
 import com.example.wz.ns.model.Origin;
 import com.example.wz.ns.model.Product;
@@ -33,6 +34,8 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
 
     private String from;
     private String to;
+    private String dateTime;
+    private String departure;
     private ApiService service;
     private List<Origin> originList = new ArrayList<>();
     private List<Destination> destList = new ArrayList<>();
@@ -41,6 +44,7 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
     private RecyclerView mRecyclerView;
     private MainTestAdapter mAdapter;
     private static AppDatabase db;
+    private List<Leg> legList = new ArrayList<>();
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -63,6 +67,8 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
 
         from = intent.getStringExtra("from");
         to = intent.getStringExtra("to");
+        dateTime = intent.getStringExtra("dateTime");
+        departure = intent.getStringExtra("departure");
 
         setUpRecycleView();
 
@@ -83,15 +89,17 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
     }
 
     protected void requestData(final String from, final String to) {
-        Call<MainTest> call = service.getTrip(from, to);
+        Call<MainTest> call = service.getTrip(from, to, dateTime, departure);
         call.enqueue(new Callback<MainTest>() {
             @Override
             public void onResponse(Call<MainTest> call, Response<MainTest> response) {
                 MainTest ns = response.body();
                 // checking if respone is empty
                 if (ns != null) {
-
+                    //loop through de "trips" and extract the needed information
                     for (int i = 0; i < ns.getTrips().size(); i++) {
+                       // legList.add(ns.getTrips().get(i).getLegs().get(ns.getTrips().get(i).getLegs().size()-1));
+
                         tripList.add(ns.getTrips().get(i));
                         originList.add(ns.getTrips().get(i).getLegs().get(0).getOrigin());
                         productList.add(ns.getTrips().get(i).getLegs().get(0).getProduct());
