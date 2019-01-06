@@ -67,7 +67,6 @@ public class ExtraResultFragment extends AppCompatActivity {
 //TODO uploaden naar git dit stuk
         NumberFormat nf = NumberFormat.getNumberInstance(Locale.UK);
         DecimalFormat formatter = (DecimalFormat) nf;
-        System.out.println(priceFloat);
         if (priceFloat >= 10000.0) {
             formatter.applyPattern("€ #,###,##");
         } else {
@@ -76,13 +75,6 @@ public class ExtraResultFragment extends AppCompatActivity {
         }
 
         price = formatter.format(priceFloat);
-
-//        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-//        DecimalFormat decimalFormat = new DecimalFormat("€ #,##", symbols);
-//
-//        price = decimalFormat.format(priceFloat);
-//        decimalFormat.;
-
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         // Set up the ViewPager with the sections adapter.

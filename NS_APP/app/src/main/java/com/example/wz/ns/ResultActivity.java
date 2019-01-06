@@ -110,7 +110,6 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
             @Override
             public void onResponse(Call<MainTest> call, Response<MainTest> response) {
                 ns = response.body();
-                System.out.println(call.request().toString());
                 // checking if respone is empty
                 if (ns != null) {
                     configure();

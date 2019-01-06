@@ -4,22 +4,38 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+
 import android.net.ConnectivityManager;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.wz.ns.Database.AppDatabase;
 
-import java.text.DateFormat;
+
+import java.io.BufferedReader;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import java.nio.charset.Charset;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -39,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private Boolean departure = true;
     private static AppDatabase db;
 
+    private static final String csv = "/home/wz/MobileDev/NS_APP/app/src/main/assets/stations_nl.csv";
+
+
     @BindView(R.id.btn_departure)
     Button b;
 
@@ -53,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private int finalHour, finalMinutes;
 
     private Calendar c = Calendar.getInstance();
+    private List<String> stationList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +81,55 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         ButterKnife.bind(this);
         db = AppDatabase.getInstance(getApplicationContext());
         b.setVisibility(View.GONE);
+
+        readFromRaw();
+        createSuggestiosList();
+
     }
+
+    private void createSuggestiosList() {
+
+        //Creating the instance of ArrayAdapter containing list of language names
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this, android.R.layout.select_dialog_item, stationList);
+        //Getting the instance of AutoCompleteTextView
+        AutoCompleteTextView inpFrom = findViewById(R.id.inp_from);
+        AutoCompleteTextView inpTo = findViewById(R.id.inp_to);
+
+        inpFrom.setAdapter(adapter);
+        inpFrom.setThreshold(1);
+
+
+        inpTo.setAdapter(adapter);
+        inpTo.setThreshold(1);
+
+    }
+
+    private void readFromRaw() {
+
+        InputStream is = getResources().openRawResource(R.raw.stations_nl);
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(is, Charset.forName("UTF-8")));
+        String line = "";
+
+        try {
+            while ((line = reader.readLine()) != null) {
+                // Split the line into different tokens (using the comma as a separator).
+                List<String> tokens = Arrays.asList(line.split(","));
+                if (!tokens.get(5).matches("facultatiefstation")) {
+                    stationList.add(tokens.get(2));
+                }
+            }
+        } catch (IOException e1) {
+            Log.e("MainActivity", "Error" + line, e1);
+            e1.printStackTrace();
+        }
+    }
+
 
     @OnClick(R.id.btn_history)
     public void openHistory() {
         if (db.userJourney().getAllUserJourney().size() != 0) {
-            System.out.println(db.userJourney().getAllUserJourney().size());
             Intent i = new Intent(this, SavedJourneyActivity.class);
             startActivity(i);
         } else {
@@ -128,10 +191,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
-        finalHour = i;  System.out.println("HOUR"+i);
+        finalHour = i;
+        System.out.println("HOUR" + i);
         finalMinutes = i1;
         b.setVisibility(View.VISIBLE);
-        viewDateTime.setText(pad(finalHour) + ":" + pad(finalMinutes) +" " + finalDay+"-"+ finalMonth+"-" +finalYear);
+        viewDateTime.setText(pad(finalHour) + ":" + pad(finalMinutes) + " " + finalDay + "-" + finalMonth + "-" + finalYear);
     }
 
     private void makeRequest() {
@@ -140,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             String to = this.to.getText().toString();
 
             //prepare dateTime format
-            dateTime = finalYear + "-" + finalMonth + "-" + finalDay + "T" + pad(finalHour) + ":" + pad(finalMinutes)+ ":00";
+            dateTime = finalYear + "-" + finalMonth + "-" + finalDay + "T" + pad(finalHour) + ":" + pad(finalMinutes) + ":00";
 
 
             //chech if input is not empty & saving the search stations to the database
@@ -166,11 +230,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
 
     //method to add 0 to timePicker return value to format hh:mm
-    private String pad(int value){
+    private String pad(int value) {
 
-        if(value<10){
-            return "0"+value;
+        if (value < 10) {
+            return "0" + value;
         }
-        return ""+value;
+        return "" + value;
     }
 }

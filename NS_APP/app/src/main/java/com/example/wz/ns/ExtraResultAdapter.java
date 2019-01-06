@@ -14,13 +14,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ExtraResultAdapter extends RecyclerView.Adapter<ExtraResultAdapter.ExtraResultViewHolder>{
+public class ExtraResultAdapter extends RecyclerView.Adapter<ExtraResultAdapter.ExtraResultViewHolder> {
 
     private List<Leg> legList;
+    private int i;
 
     private static ExtraResultAdapterClickListener mExtraResultAdapterClickListener;
 
-    public ExtraResultAdapter(List<Leg> legList,ExtraResultAdapterClickListener mExtraResultAdapterClickListener  ) {
+    public ExtraResultAdapter(List<Leg> legList, ExtraResultAdapterClickListener mExtraResultAdapterClickListener) {
         this.legList = legList;
         this.mExtraResultAdapterClickListener = mExtraResultAdapterClickListener;
     }
@@ -43,24 +44,24 @@ public class ExtraResultAdapter extends RecyclerView.Adapter<ExtraResultAdapter.
     @Override
     public void onBindViewHolder(@NonNull ExtraResultViewHolder holder, int i) {
 
-            String from = legList.get(i).getOrigin().getName();
-            String to = legList.get(i).getDestination().getName();
-            String originPlannedDateTime = convertTime(legList.get(i).getOrigin().getPlannedDateTime());
-            String destPlannedDateTime = convertTime(legList.get(i).getDestination().getPlannedDateTime());
-            String track = legList.get(i).getOrigin().getPlannedTrack();
-            String trainType = legList.get(i).getProduct().getDisplayName();
+        this.i = i;
+        String from = legList.get(i).getOrigin().getName();
+        String to = legList.get(i).getDestination().getName();
+        String originPlannedDateTime = convertTime(legList.get(i).getOrigin().getPlannedDateTime());
+        String destPlannedDateTime = convertTime(legList.get(i).getDestination().getPlannedDateTime());
+        String track = legList.get(i).getOrigin().getPlannedTrack();
+        String trainType = legList.get(i).getProduct().getDisplayName();
 
 
-
-            holder.from.setText(from);
-            holder.to.setText(to);
-            holder.fromTime.setText(originPlannedDateTime);
-            holder.toTime.setText(destPlannedDateTime);
-            holder.track.setText(track);
-            holder.trainType.setText(trainType);
+        holder.from.setText(from);
+        holder.to.setText(to);
+        holder.fromTime.setText(originPlannedDateTime);
+        holder.toTime.setText(destPlannedDateTime);
+        holder.track.setText(track);
+        holder.trainType.setText(trainType);
     }
 
-    private String convertTime(String time){
+    private String convertTime(String time) {
 
         //pattern for extracting time
         Pattern p = Pattern.compile("\\d\\d:+\\d\\d");
