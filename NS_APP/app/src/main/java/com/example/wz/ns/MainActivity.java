@@ -55,9 +55,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private Boolean departure = true;
     private static AppDatabase db;
 
-    private static final String csv = "/home/wz/MobileDev/NS_APP/app/src/main/assets/stations_nl.csv";
-
-
     @BindView(R.id.btn_departure)
     Button b;
 
@@ -83,15 +80,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         b.setVisibility(View.GONE);
 
         readFromRaw();
-        createSuggestiosList();
-
+        createSuggestionsList();
+        System.out.println(stationList.size());
     }
 
-    private void createSuggestiosList() {
+    private void createSuggestionsList() {
 
         //Creating the instance of ArrayAdapter containing list of language names
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this, android.R.layout.select_dialog_item, stationList);
+                (this, android.R.layout.simple_list_item_1, stationList);
         //Getting the instance of AutoCompleteTextView
         AutoCompleteTextView inpFrom = findViewById(R.id.inp_from);
         AutoCompleteTextView inpTo = findViewById(R.id.inp_to);
