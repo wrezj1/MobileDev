@@ -14,7 +14,7 @@
         android:layout_marginStart="73dp"
         android:layout_marginTop="248dp"
         android:completionThreshold="1"
-        android:hint="From statoin"
+        android:hint="From station"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
