@@ -51,7 +51,6 @@ public class MainTestAdapter extends RecyclerView.Adapter<MainTestAdapter.MainTe
         String durationTime = customTrips.get(position).getJourneyTime();
         String status = customTrips.get(position).getStatus();
 
-
         holder.vertrekTijd.setText(originPlannedDateTime);
         holder.aankomtTijd.setText(destPlannedDateTime);
         holder.duration.setText(durationTime);

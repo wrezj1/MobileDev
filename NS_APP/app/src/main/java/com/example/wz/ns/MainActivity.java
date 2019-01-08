@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         readFromRaw();
         createSuggestionsList();
-        System.out.println(stationList.size());
     }
 
     private void createSuggestionsList() {

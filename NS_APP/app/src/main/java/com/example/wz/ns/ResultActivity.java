@@ -21,8 +21,12 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.sql.SQLOutput;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,9 +62,11 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
     @BindView(R.id.view_waitText )
     TextView waitText;
 
+    @BindView(R.id.view_result_date)
+    TextView date;
+
 
     private List<CustomTrip> customTrips = new ArrayList<>();
-    private List<List<Leg>> legList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +82,6 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
         to = intent.getStringExtra("to");
         dateTime = intent.getStringExtra("dateTime");
         departure = intent.getBooleanExtra("departure",true);
-        System.out.println(departure);
 
 
         // getting actual data from user input
@@ -155,7 +160,11 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
         destName.setText(customTrips.get(0).getDest());
         mAdapter.notifyDataSetChanged();
 
-
+        if(dateTime != null && !dateTime.matches("0-0-0T00:00:00")){
+            date.setText(dateTime.replace("T","\n"));
+        }else{
+            date.setText("Today");
+        }
     }
 
 

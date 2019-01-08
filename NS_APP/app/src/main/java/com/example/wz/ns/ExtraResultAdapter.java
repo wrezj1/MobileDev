@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
 public class ExtraResultAdapter extends RecyclerView.Adapter<ExtraResultAdapter.ExtraResultViewHolder> {
 
     private List<Leg> legList;
-    private int i;
 
     private static ExtraResultAdapterClickListener mExtraResultAdapterClickListener;
 
@@ -44,7 +43,6 @@ public class ExtraResultAdapter extends RecyclerView.Adapter<ExtraResultAdapter.
     @Override
     public void onBindViewHolder(@NonNull ExtraResultViewHolder holder, int i) {
 
-        this.i = i;
         String from = legList.get(i).getOrigin().getName();
         String to = legList.get(i).getDestination().getName();
         String originPlannedDateTime = convertTime(legList.get(i).getOrigin().getPlannedDateTime());
