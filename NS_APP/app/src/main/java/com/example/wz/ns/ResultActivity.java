@@ -161,11 +161,21 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
         mAdapter.notifyDataSetChanged();
 
         if(dateTime != null && !dateTime.matches("0-0-0T00:00:00")){
-            date.setText(dateTime.replace("T","\n"));
+            date.setText(MainActivity.journeyTime);
         }else{
             date.setText("Today");
         }
     }
+
+    //method to add 0 to timePicker return value to format hh:mm
+    private String pad(int value) {
+
+        if (value < 10) {
+            return "0" + value;
+        }
+        return "" + value;
+    }
+
 
 
     @Override

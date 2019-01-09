@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     private Calendar c = Calendar.getInstance();
     private List<String> stationList = new ArrayList<>();
+    protected static String journeyTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,7 +192,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         System.out.println("HOUR" + i);
         finalMinutes = i1;
         b.setVisibility(View.VISIBLE);
-        viewDateTime.setText(pad(finalHour) + ":" + pad(finalMinutes) + " " + finalDay + "-" + finalMonth + "-" + finalYear);
+        journeyTime = pad(finalHour) + ":" + pad(finalMinutes) + "\n" + finalDay + "-" + finalMonth + "-" + finalYear;
+
+        viewDateTime.setText(journeyTime);
     }
 
     private void makeRequest() {
