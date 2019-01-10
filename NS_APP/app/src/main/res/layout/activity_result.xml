@@ -12,7 +12,7 @@
         android:layout_width="267dp"
         android:layout_height="128dp"
         android:layout_marginBottom="30dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="48dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="25dp"
         android:text="@string/waitText"
@@ -22,15 +22,13 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.18"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.476" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="382dp"
+        android:layout_height="107dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -39,53 +37,84 @@
             android:id="@+id/view_originName"
             android:layout_width="176dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginEnd="1dp"
             android:layout_marginStart="1dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="8dp"
             android:autoSizeTextType="uniform"
             android:fontFamily="serif"
             android:textAlignment="center"
-            android:textColor="@color/design_default_color_primary_dark"
+            android:textColor="@color/colorPrimary"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/view_destName"
             app:layout_constraintHorizontal_bias="0.24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_result_date"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/view_result_time" />
 
         <TextView
             android:id="@+id/view_destName"
             android:layout_width="177dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginEnd="4dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="8dp"
             android:autoSizeTextType="uniform"
             android:fontFamily="serif"
             android:textAlignment="center"
-            android:textColor="@color/design_default_color_primary_dark"
+            android:textColor="@color/colorPrimary"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_result_date"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.454" />
 
         <TextView
             android:id="@+id/view_result_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="164dp"
-            android:layout_marginStart="162dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="serif"
+            android:layout_marginEnd="50dp"
+            android:fontFamily="sans-serif"
+            android:textAlignment="center"
             android:textColor="@color/design_default_color_primary_dark"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:textSize="30sp"
+            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view_result_time" />
+
+        <TextView
+            android:id="@+id/view_result_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="15dp"
+            android:textAlignment="textStart"
+            android:textColor="@color/design_default_color_primary_dark"
+            android:textSize="30sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/view_result_date"
+            app:layout_constraintHorizontal_bias="0.733"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/view_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:layout_marginEnd="150dp"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"
+            android:textColor="@color/design_default_color_primary"
+            android:textSize="30sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toTopOf="@+id/view_destName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.v7.widget.RecyclerView

@@ -38,8 +38,10 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
 
     private String from;
     private String to;
-    private String dateTime;
+    private String journeyTime;
+    private String journeyDate;
     private Boolean departure;
+    private String dateTime;
     private ApiService service;
     private RecyclerView mRecyclerView;
     private MainTestAdapter mAdapter;
@@ -65,6 +67,12 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
     @BindView(R.id.view_result_date)
     TextView date;
 
+    @BindView(R.id.view_result_time)
+    TextView time;
+
+    @BindView(R.id.view_today)
+    TextView today;
+
 
     private List<CustomTrip> customTrips = new ArrayList<>();
 
@@ -80,6 +88,8 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
 
         from = intent.getStringExtra("from");
         to = intent.getStringExtra("to");
+        journeyTime = intent.getStringExtra("journeyTime");
+        journeyDate = intent.getStringExtra("journeyDate");
         dateTime = intent.getStringExtra("dateTime");
         departure = intent.getBooleanExtra("departure",true);
 
@@ -161,9 +171,10 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
         mAdapter.notifyDataSetChanged();
 
         if(dateTime != null && !dateTime.matches("0-0-0T00:00:00")){
-            date.setText(MainActivity.journeyTime);
+            date.setText(journeyDate);
+            time.setText(journeyTime);
         }else{
-            date.setText("Today");
+            today.setText("Today");
         }
     }
 

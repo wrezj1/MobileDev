@@ -116,28 +116,23 @@
         app:layout_constraintTop_toBottomOf="@+id/inp_to" />
 
     <TextView
-        android:id="@+id/view_dateTime"
-        android:layout_width="148dp"
+        android:id="@+id/view_time"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="serif"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_find"
-        app:layout_constraintEnd_toStartOf="@+id/btn_departure"
-        app:layout_constraintHorizontal_bias="0.941"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_pickTime"
-        app:layout_constraintVertical_bias="0.36" />
+        app:layout_constraintStart_toStartOf="@+id/view_date"
+        app:layout_constraintTop_toBottomOf="@+id/btn_pickTime" />
 
     <Button
         android:id="@+id/btn_departure"
         android:layout_width="112dp"
         android:layout_height="38dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginEnd="80dp"
         android:layout_marginTop="20dp"
         android:background="@color/colorPrimary"
         android:fontFamily="serif"
@@ -146,8 +141,18 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_find"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_pickTime"
-        app:layout_constraintVertical_bias="0.24000001" />
+        app:layout_constraintVertical_bias="0.333" />
 
+    <TextView
+        android:id="@+id/view_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_departure"
+        app:layout_constraintTop_toBottomOf="@+id/view_time" />
 
 
 </android.support.constraint.ConstraintLayout>

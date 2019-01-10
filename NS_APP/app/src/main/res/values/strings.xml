@@ -20,6 +20,7 @@
     <string name="removeAll"><u>Clean history</u></string>
     <string name="timeDate"><u>Pick time</u></string>
     <string name="departure">departure</string>
+    <string name="transfer">Transfer</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

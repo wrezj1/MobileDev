@@ -51,15 +51,20 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     @BindView(R.id.inp_to)
     public EditText to;
 
+    @BindView(R.id.btn_departure)
+    Button b;
+
+    @BindView(R.id.view_time)
+    TextView viewTime;
+
+    @BindView(R.id.view_date)
+    TextView viewDate;
+
     private String dateTime = "";
     private Boolean departure = true;
     private static AppDatabase db;
 
-    @BindView(R.id.btn_departure)
-    Button b;
 
-    @BindView(R.id.view_dateTime)
-    TextView viewDateTime;
 
     private int year, month, day;
     private int finalYear, finalMonth, finalDay;
@@ -70,7 +75,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     private Calendar c = Calendar.getInstance();
     private List<String> stationList = new ArrayList<>();
+
     protected static String journeyTime;
+    protected static String journeyDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,9 +199,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         System.out.println("HOUR" + i);
         finalMinutes = i1;
         b.setVisibility(View.VISIBLE);
-        journeyTime = pad(finalHour) + ":" + pad(finalMinutes) + "\n" + finalDay + "-" + finalMonth + "-" + finalYear;
+        journeyTime = pad(finalHour) + ":" + pad(finalMinutes);
+        journeyDate = finalDay + "-" + finalMonth + "-" + finalYear;
 
-        viewDateTime.setText(journeyTime);
+        viewTime.setText(journeyTime);
+        viewDate.setText(journeyDate);
     }
 
     private void makeRequest() {
@@ -216,6 +225,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 Intent intent = new Intent(this, ResultActivity.class);
                 intent.putExtra("from", from);
                 intent.putExtra("to", to);
+                intent.putExtra("journeyTime", journeyTime);
+                intent.putExtra("journeyDate", journeyDate);
                 intent.putExtra("dateTime", dateTime);
                 intent.putExtra("departure", departure);
                 startActivity(intent);
