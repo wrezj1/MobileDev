@@ -25,6 +25,7 @@ public class ExtraResultAdapter extends RecyclerView.Adapter<ExtraResultAdapter.
         this.mExtraResultAdapterClickListener = mExtraResultAdapterClickListener;
     }
 
+    //interface to get object position from the fragment
     public interface ExtraResultAdapterClickListener {
         void ExtraResultAdapterOnClick(int i);
     }

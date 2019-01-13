@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 
 import android.os.Bundle;
@@ -87,31 +88,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         db = AppDatabase.getInstance(getApplicationContext());
         b.setVisibility(View.GONE);
 
-        readFromRaw();
+        readFromCsv(getResources().openRawResource(R.raw.stations_nl));
         createSuggestionsList();
     }
 
-    private void createSuggestionsList() {
-
-        //Creating the instance of ArrayAdapter containing list of language names
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_list_item_1, stationList);
-        //Getting the instance of AutoCompleteTextView
-        AutoCompleteTextView inpFrom = findViewById(R.id.inp_from);
-        AutoCompleteTextView inpTo = findViewById(R.id.inp_to);
-
-        inpFrom.setAdapter(adapter);
-        inpFrom.setThreshold(1);
-
-
-        inpTo.setAdapter(adapter);
-        inpTo.setThreshold(1);
-
-    }
-
-    private void readFromRaw() {
-
-        InputStream is = getResources().openRawResource(R.raw.stations_nl);
+    private void readFromCsv(InputStream is) {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(is, Charset.forName("UTF-8")));
         String line = "";
@@ -130,6 +111,55 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+    private void makeRequest() {
+        if (isNetworkConnected()) {
+            String from = this.from.getText().toString();
+            String to = this.to.getText().toString();
+
+            //prepare dateTime format
+            dateTime = finalYear + "-" + finalMonth + "-" + finalDay + "T" + pad(finalHour) + ":" + pad(finalMinutes) + ":00";
+
+            //chech if input is not empty & saving the search stations to the database
+            if (!from.matches("") && !to.matches("")) {
+                //check if both input is the same
+                if (from.matches(to)) {
+                    Toast.makeText(this, "Both stations are the same", Toast.LENGTH_LONG).show();
+                }
+
+                //prepare the intent & start new activity
+                Intent intent = new Intent(this, ResultActivity.class);
+                intent.putExtra("from", from);
+                intent.putExtra("to", to);
+                intent.putExtra("journeyTime", journeyTime);
+                intent.putExtra("journeyDate", journeyDate);
+                intent.putExtra("dateTime", dateTime);
+                intent.putExtra("departure", departure);
+                startActivity(intent);
+
+            } else {
+                Toast.makeText(this, "Fill in both locations", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(this, "Check internet connection", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void createSuggestionsList() {
+        //Creating the instance of ArrayAdapter containing list of language names
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_list_item_1, stationList);
+        //Getting the instance of AutoCompleteTextView
+        AutoCompleteTextView inpFrom = findViewById(R.id.inp_from);
+        AutoCompleteTextView inpTo = findViewById(R.id.inp_to);
+
+        inpFrom.setAdapter(adapter);
+        inpFrom.setThreshold(1);
+
+
+        inpTo.setAdapter(adapter);
+        inpTo.setThreshold(1);
+
+    }
 
     @OnClick(R.id.btn_history)
     public void openHistory() {
@@ -143,27 +173,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     @OnClick(R.id.btn_find)
     public void findJourney() {
-
         makeRequest();
-    }
-
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null;
-    }
-
-
-    @OnClick(R.id.btn_pickTime)
-    public void pickTime() {
-        year = c.get(Calendar.YEAR);
-        month = c.get(Calendar.MONTH);
-        day = c.get(Calendar.DAY_OF_MONTH);
-
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, MainActivity.this,
-                year, month, day);
-
-        datePickerDialog.show();
     }
 
     @OnClick(R.id.btn_departure)
@@ -176,6 +186,19 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             departure = true;
             b.setText("Departure");
         }
+    }
+
+    @OnClick(R.id.btn_pickTime)
+    public void pickTime() {
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, MainActivity.this,
+                year, month, day);
+
+        datePickerDialog.show();
     }
 
     @Override
@@ -201,45 +224,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         b.setVisibility(View.VISIBLE);
         journeyTime = pad(finalHour) + ":" + pad(finalMinutes);
         journeyDate = finalDay + "-" + finalMonth + "-" + finalYear;
-
         viewTime.setText(journeyTime);
         viewDate.setText(journeyDate);
     }
 
-    private void makeRequest() {
-        if (isNetworkConnected()) {
-            String from = this.from.getText().toString();
-            String to = this.to.getText().toString();
-
-            //prepare dateTime format
-            dateTime = finalYear + "-" + finalMonth + "-" + finalDay + "T" + pad(finalHour) + ":" + pad(finalMinutes) + ":00";
-
-
-            //chech if input is not empty & saving the search stations to the database
-            if (!from.matches("") && !to.matches("")) {
-                //check if both input is the same
-                if (from.matches(to)) {
-                    Toast.makeText(this, "Both stations are the same", Toast.LENGTH_LONG).show();
-                }
-                //prepare the intent & start new activity
-                Intent intent = new Intent(this, ResultActivity.class);
-                intent.putExtra("from", from);
-                intent.putExtra("to", to);
-                intent.putExtra("journeyTime", journeyTime);
-                intent.putExtra("journeyDate", journeyDate);
-                intent.putExtra("dateTime", dateTime);
-                intent.putExtra("departure", departure);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "Fill in both locations", Toast.LENGTH_LONG).show();
-            }
-        } else {
-            Toast.makeText(this, "Check internet connection", Toast.LENGTH_LONG).show();
-        }
-    }
-
-
-    //method to add 0 to timePicker return value to format hh:mm
+    //method to add 0 to timePicker return value to format hh:mm for single digit times
     private String pad(int value) {
 
         if (value < 10) {
@@ -247,4 +236,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
         return "" + value;
     }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
+    }
+
 }

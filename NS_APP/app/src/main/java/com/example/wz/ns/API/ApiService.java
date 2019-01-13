@@ -20,9 +20,9 @@ public interface ApiService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        //sending api key in the header
         @Headers("x-api-key:tB3ftiVRG94ynW9yPjaDC1fqCr0hwuaL3Jq5LoLQ")
         @GET("/reisinfo/api/v3/trips")
         Call<MainTest> getTrip(@Query("fromStation") String from, @Query("toStation") String to,
                 @Query("dateTime") String dateTime, @Query("departure") Boolean departureTime);
 }
-       // @Query("dateTime")String dateTime, @Query("departure") String departure

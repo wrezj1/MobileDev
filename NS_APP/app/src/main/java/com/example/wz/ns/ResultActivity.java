@@ -82,10 +82,11 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
         setContentView(R.layout.activity_result);
         ButterKnife.bind(this);
 
+        //starting api service
         service = ApiService.retrofit.create(ApiService.class);
 
+        //getting intent from mainActivity
         Intent intent = getIntent();
-
         from = intent.getStringExtra("from");
         to = intent.getStringExtra("to");
         journeyTime = intent.getStringExtra("journeyTime");
@@ -94,7 +95,7 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
         departure = intent.getBooleanExtra("departure",true);
 
 
-        // getting actual data from user input
+        // getting actual data from user input and saving to db
         try {
             requestData(from, to);
             //save the input from user because the stations are found
@@ -105,10 +106,7 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
             Toast.makeText(this, "No connection with the api available", Toast.LENGTH_LONG).show();
         }
 
-
         setUpRecycleView();
-
-
     }
 
     private void setUpRecycleView() {
@@ -124,11 +122,12 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
         call.enqueue(new Callback<MainTest>() {
             @Override
             public void onResponse(Call<MainTest> call, Response<MainTest> response) {
+                //saving the maintest object
                 ns = response.body();
                 // checking if respone is empty
                 if (ns != null) {
                     configure();
-                    waitText.setText("");
+                    waitText.setVisibility(TextView.INVISIBLE);
 
                 } else {
                     //if response is empty send back to start screen
@@ -146,6 +145,7 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
         });
     }
 
+    //create object from
     private void configure() {
         int tripSize = ns.getTrips().size();
         int legSize;
@@ -160,16 +160,22 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
                     ns.getTrips().get(i).getLegs().get(legSize - 1).getDestination().getPlannedDateTime(),
                     ns.getTrips().get(i).getPlannedDurationInMinutes().toString(),
                     ns.getTrips().get(i).getCrowdForecast(), ns.getTrips().get(i).getStatus());
+            //saving nested list of transfers
             for (int y = 0; y < legSize; y++) {
-
                 ct.setCustomLeg(ns.getTrips().get(i).getLegs());
             }
+
             customTrips.add(ct);
         }
         originName.setText(customTrips.get(0).getOrigin());
         destName.setText(customTrips.get(0).getDest());
         mAdapter.notifyDataSetChanged();
 
+       checkTimeDateOnSet();
+    }
+
+    private void checkTimeDateOnSet(){
+        //if date is not set
         if(dateTime != null && !dateTime.matches("0-0-0T00:00:00")){
             date.setText(journeyDate);
             time.setText(journeyTime);
@@ -177,16 +183,6 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
             today.setText("Today");
         }
     }
-
-    //method to add 0 to timePicker return value to format hh:mm
-    private String pad(int value) {
-
-        if (value < 10) {
-            return "0" + value;
-        }
-        return "" + value;
-    }
-
 
 
     @Override
@@ -200,14 +196,10 @@ public class ResultActivity extends AppCompatActivity implements MainTestAdapter
         intent.putExtra("bundle", args);
         intent.putExtra("tripSize", tripSize);
 
-
         if(null != ns.getTrips().get(i).getProductFare()){
         intent.putExtra("crowd", ns.getTrips().get(i).getCrowdForecast());
         intent.putExtra("price", ns.getTrips().get(i).getProductFare().getPriceInCents());
-
         }
-
-
         startActivity(intent);
 
     }

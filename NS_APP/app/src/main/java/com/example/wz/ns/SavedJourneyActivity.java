@@ -31,16 +31,20 @@ public class SavedJourneyActivity extends AppCompatActivity implements UserJourn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_journey);
         ButterKnife.bind(this);
-        setUpRecycleView();
+
+
+
+        //get intent from MainActivity
         getIntent();
 
         db = AppDatabase.getInstance(getApplicationContext());
         saveList = db.userJourney().getAllUserJourney();
+
+        setUpRecycleView();
         updateUI();
         swipeToDelete();
 
     }
-
 
     //forcing to refresh the recyclerView
     private static void updateUI() {
@@ -58,7 +62,6 @@ public class SavedJourneyActivity extends AppCompatActivity implements UserJourn
         mAdapter = new UserJourneyAdapter(saveList, this);
         mRecyclerView.setAdapter(mAdapter);
     }
-
 
     @Override
     public void userJourneyOnClick(int i) {

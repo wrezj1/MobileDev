@@ -43,29 +43,42 @@ public class ExtraResultFragment extends AppCompatActivity {
 
     private int priceCent;
     private double priceFloat;
-    private String price;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private String price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_extra_result);
 
-
-        //get the legs of the trip from the result activity
+        //get the legs (transfers) of the trip from the result activity
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("bundle");
+
         legs = (ArrayList<Leg>) args.getSerializable("list");
         priceCent = intent.getIntExtra("price", -1);
         crowd = intent.getStringExtra("crowd");
 
-        ///+100 for tax to price
-        priceFloat = priceCent + 100;
+        setUpPagerAdapter();
+        price = formatCurrency(priceCent);
 
-//TODO uploaden naar git dit stuk
-        NumberFormat nf = NumberFormat.getNumberInstance(Locale.UK);
+    }
+
+    private void setUpPagerAdapter(){
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+    }
+
+    private String formatCurrency(int priceCent){
+        //1 euro paperticket tax
+        int tax = 100;
+        priceFloat = priceCent + tax;
+
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.GERMANY);
         DecimalFormat formatter = (DecimalFormat) nf;
         if (priceFloat >= 10000.0) {
             formatter.applyPattern("€ #,###,##");
@@ -74,13 +87,10 @@ public class ExtraResultFragment extends AppCompatActivity {
             formatter.applyPattern("€ #,##");
         }
 
-        price = formatter.format(priceFloat);
+        String priceFormatted = formatter.format(priceFloat);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        return priceFormatted;
     }
 
     public static class PlaceholderFragment extends Fragment implements ExtraResultAdapter.ExtraResultAdapterClickListener {
@@ -132,6 +142,7 @@ public class ExtraResultFragment extends AppCompatActivity {
         private void setUpRecycleView() {
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
             mRecyclerView.setLayoutManager(mLayoutManager);
+            //using the interface for position
             mAdapter = new ExtraResultAdapter(legs, this);
             mRecyclerView.setAdapter(mAdapter);
         }
