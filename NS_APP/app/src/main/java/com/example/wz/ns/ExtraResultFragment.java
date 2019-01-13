@@ -78,7 +78,7 @@ public class ExtraResultFragment extends AppCompatActivity {
         int tax = 100;
         priceFloat = priceCent + tax;
 
-        NumberFormat nf = NumberFormat.getNumberInstance(Locale.GERMANY);
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.UK);
         DecimalFormat formatter = (DecimalFormat) nf;
         if (priceFloat >= 10000.0) {
             formatter.applyPattern("€ #,###,##");
